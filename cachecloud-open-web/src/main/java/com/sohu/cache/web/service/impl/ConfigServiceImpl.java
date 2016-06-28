@@ -139,7 +139,27 @@ public class ConfigServiceImpl implements ConfigService {
         //cookie登录方式所需要的domain
         ConstUtils.COOKIE_DOMAIN = MapUtils.getString(configMap, "cachecloud.cookie.domain", ConstUtils.DEFAULT_COOKIE_DOMAIN);
         logger.warn("{}: {}", "ConstUtils.COOKIE_DOMAIN", ConstUtils.COOKIE_DOMAIN);
-
+        
+        //cachecloud根目录
+        ConstUtils.CACHECLOUD_BASE_DIR = MapUtils.getString(configMap, "cachecloud.base.dir", ConstUtils.DEFAULT_CACHECLOUD_BASE_DIR);
+        logger.warn("{}: {}", "ConstUtils.CACHECLOUD_BASE_DIR", ConstUtils.CACHECLOUD_BASE_DIR);
+        
+        //应用客户端连接报警阀值
+        ConstUtils.APP_CLIENT_CONN_THRESHOLD = MapUtils.getIntValue(configMap, "cachecloud.app.client.conn.threshold", ConstUtils.DEFAULT_APP_CLIENT_CONN_THRESHOLD);
+        logger.warn("{}: {}", "ConstUtils.APP_CLIENT_CONN_THRESHOLD", ConstUtils.APP_CLIENT_CONN_THRESHOLD);
+        
+        //邮件报警接口
+        ConstUtils.EMAIL_ALERT_INTERFACE = MapUtils.getString(configMap, "cachecloud.email.alert.interface", ConstUtils.DEFAULT_EMAIL_ALERT_INTERFACE);
+        logger.warn("{}: {}", "ConstUtils.EMAIL_ALERT_INTERFACE", ConstUtils.EMAIL_ALERT_INTERFACE);
+        
+        //短信报警接口
+        ConstUtils.MOBILE_ALERT_INTERFACE = MapUtils.getString(configMap, "cachecloud.mobile.alert.interface", ConstUtils.DEFAULT_MOBILE_ALERT_INTERFACE);
+        logger.warn("{}: {}", "ConstUtils.MOBILE_ALERT_INTERFACE", ConstUtils.MOBILE_ALERT_INTERFACE);
+        
+        //LDAP登录地址
+        ConstUtils.LDAP_URL = MapUtils.getString(configMap, "cachecloud.ldap.url", ConstUtils.DEFAULT_LDAP_URL);
+        logger.warn("{}: {}", "ConstUtils.LDAP_URL", ConstUtils.LDAP_URL);
+        
         logger.warn("===========ConfigServiceImpl reload config end============");
     }
 
