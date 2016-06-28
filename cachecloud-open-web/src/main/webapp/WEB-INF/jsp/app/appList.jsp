@@ -84,6 +84,9 @@
 					    <input type="text" class="form-control" id="appId" name="appId" value="${appSearch.appId}" placeholder="应用ID" onchange="testisNum(this.id)">
 					  </div>
 					  <div class="form-group">
+					    <input type="text" class="form-control" id="appToken" name="appToken" value="${appSearch.appToken}" placeholder="应用TOKEN">
+					  </div>
+					  <div class="form-group">
 					    <input type="text" class="form-control" id="appName" name="appName" value="${appSearch.appName}" placeholder="应用名">
 					  </div>
 					  <div class="form-group">
@@ -156,6 +159,7 @@
 	                <thead>
 		                <tr>
 		                    <td>应用ID</td>
+		                    <td>应用token</td>
 		                    <td>应用名</td>
 		                    <td>应用类型</td>
 		                    <td>内存详情</td>
@@ -175,6 +179,16 @@
 			                    		</c:when>
 			                    		<c:when test="${appDetail.appDesc.status == 2 or appDetail.appDesc.status == 3 or appDetail.appDesc.status == 4}">
 			                    			<a target="_blank" href="/admin/app/index.do?appId=${appDetail.appDesc.appId}">${appDetail.appDesc.appId}</a>
+			                    		</c:when>
+			                    	</c:choose>
+			                    </td>
+			                    <td>
+			                    	<c:choose>
+			                    		<c:when test="${appDetail.appDesc.status == 0 or appDetail.appDesc.status == 1}">
+			                   				${appDetail.appDesc.appToken}
+			                    		</c:when>
+			                    		<c:when test="${appDetail.appDesc.status == 2 or appDetail.appDesc.status == 3 or appDetail.appDesc.status == 4}">
+			                    			<a target="_blank" href="/admin/app/index.do?appId=${appDetail.appDesc.appId}">${appDetail.appDesc.appToken}</a>
 			                    		</c:when>
 			                    	</c:choose>
 			                    </td>

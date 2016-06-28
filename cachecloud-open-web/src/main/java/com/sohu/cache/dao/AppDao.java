@@ -15,6 +15,13 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AppDao {
     /**
+     * 通过appToken获取对应的app
+     * @param appToken
+     * @return
+     */
+    public AppDesc getAppDescByToken(@Param("appToken") String appToken);
+    
+    /**
      * 通过appId获取对应的app
      * @param appId
      * @return

@@ -6,8 +6,16 @@
     <sql id="app_desc_fields">
         app_id,name,user_id,status,intro,create_time,passed_time,type,officer,
         ver_id,is_test,has_back_store,need_persistence,need_hot_back_up,forecase_qps,
-        forecast_obj_num,mem_alert_value,client_machine_room
+        forecast_obj_num,mem_alert_value,client_machine_room,app_token
     </sql>
+    <!--通过appToken查询app的信息-->
+    <select id="getAppDescByToken" resultType="AppDesc" parameterType="String">
+        SELECT
+            <include refid="app_desc_fields"/>
+        FROM app_desc
+        WHERE app_token = #{appToken};
+    </select>
+    
     <!--通过appId查询app的信息-->
     <select id="getAppDescById" resultType="AppDesc" parameterType="long">
         SELECT
@@ -31,7 +39,7 @@
 		values
 			(#{appId},#{name},#{userId},#{status},#{intro},#{createTime},#{passedTime},
 			#{type},#{officer},#{verId},#{isTest},#{hasBackStore},#{needPersistence},
-			#{needHotBackUp},#{forecaseQps},#{forecastObjNum},#{memAlertValue},#{clientMachineRoom})    	
+			#{needHotBackUp},#{forecaseQps},#{forecastObjNum},#{memAlertValue},#{clientMachineRoom},#{appToken})    	
     </insert>
     
     <update id="update" parameterType="AppDesc">

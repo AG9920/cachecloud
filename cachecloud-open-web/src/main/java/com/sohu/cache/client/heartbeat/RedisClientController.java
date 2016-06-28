@@ -48,9 +48,21 @@ public class RedisClientController {
      * @param appId
      * @param model
      */
-    @RequestMapping(value = "/redis/cluster/{appId}.json")
-    public void getClusterAppById(HttpServletRequest request, @PathVariable long appId, Model model) {
-        if (!handleRedisApp(appId, model, ConstUtils.CACHE_TYPE_REDIS_CLUSTER)) {
+    @RequestMapping(value = "/redis/cluster/{appToken}.json")
+    public void getClusterAppById(HttpServletRequest request, @PathVariable String appToken, Model model) {
+    	if ("".equals(appToken.trim())) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token不能为空 ");
+            return;
+    	}
+        AppDesc appDesc = appDao.getAppDescByToken(appToken);
+        if (appDesc == null) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token错误,token: "+appToken);
+            return;
+        }
+
+        if (!handleRedisApp(appDesc.getAppId(), model, ConstUtils.CACHE_TYPE_REDIS_CLUSTER)) {
             return;
         }
 
@@ -59,29 +71,32 @@ public class RedisClientController {
             return;
         }
 
-        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appId);
+        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appDesc.getAppId());
         if (instanceList == null || instanceList.isEmpty()) {
             model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
-            model.addAttribute("message", "ERROR: appId:" + appId + "实例集合为空 ");
+            model.addAttribute("message", "ERROR: appId:" + appDesc.getAppId() + "实例集合为空 ");
             return;
         }
+
         String shardsInfo = ObjectConvert.assembleInstance(instanceList);
         if (StringUtils.isBlank(shardsInfo)) {
             model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
-            model.addAttribute("message", "ERROR: appId:" + appId + "shardsInfo为空 ");
+            model.addAttribute("message", "ERROR: appId:" + appDesc.getAppId() + "shardsInfo为空 ");
             return;
         }
+
         int shardNum = shardsInfo.split(" ").length;
-        model.addAttribute("appId", appId);
+        model.addAttribute("appId", appDesc.getAppId());
         model.addAttribute("shardNum", shardNum);
         model.addAttribute("shardInfo", shardsInfo);
-        
+
         //保存版本信息
         try {
-            clientVersionService.saveOrUpdateClientVersion(appId, IpUtil.getIpAddr(request), clientVersion);
+            clientVersionService.saveOrUpdateClientVersion(appDesc.getAppId(), IpUtil.getIpAddr(request), clientVersion);
         } catch (Exception e) {
             logger.error("redisCluster heart error:" + e.getMessage(), e);
         }
+
     }
 
     /**
@@ -90,9 +105,21 @@ public class RedisClientController {
      * @param appId
      * @param model
      */
-    @RequestMapping(value = "/redis/sentinel/{appId}.json")
-    public void getSentinelAppById(HttpServletRequest request, @PathVariable long appId, Model model) {
-        if (!handleRedisApp(appId, model, ConstUtils.CACHE_REDIS_SENTINEL)) {
+    @RequestMapping(value = "/redis/sentinel/{appToken}.json")
+    public void getSentinelAppById(HttpServletRequest request, @PathVariable String appToken, Model model) {
+
+    	if ("".equals(appToken.trim())) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token不能为空 ");
+            return;
+    	}
+        AppDesc appDesc = appDao.getAppDescByToken(appToken);
+        if (appDesc == null) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token错误:" + appToken);
+            return;
+        }
+        if (!handleRedisApp(appDesc.getAppId(), model, ConstUtils.CACHE_REDIS_SENTINEL)) {
             return;
         }
 
@@ -101,10 +128,10 @@ public class RedisClientController {
             return;
         }
 
-        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appId);
+        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appDesc.getAppId());
         if (instanceList == null || instanceList.isEmpty()) {
             model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
-            model.addAttribute("message", "appId: " + appId + " 实例集合为空 ");
+            model.addAttribute("message", "appId: " + appDesc.getAppId() + " 实例集合为空 ");
             return;
         }
         String masterName = null;
@@ -125,12 +152,12 @@ public class RedisClientController {
         String sentinels = StringUtils.join(sentinelList, " ");
         model.addAttribute("sentinels", sentinels);
         model.addAttribute("masterName", masterName);
-        model.addAttribute("appId", appId);
+        model.addAttribute("appId", appDesc.getAppId());
         model.addAttribute("status", ClientStatusEnum.GOOD.getStatus());
         
         //保存版本信息
         try {
-            clientVersionService.saveOrUpdateClientVersion(appId, IpUtil.getIpAddr(request), clientVersion);
+            clientVersionService.saveOrUpdateClientVersion(appDesc.getAppId(), IpUtil.getIpAddr(request), clientVersion);
         } catch (Exception e) {
             logger.error("redisSentinel heart error:" + e.getMessage(), e);
         }
@@ -142,9 +169,21 @@ public class RedisClientController {
      * @param appId
      * @param model
      */
-    @RequestMapping(value = "/redis/standalone/{appId}.json")
-    public void getStandaloneAppById(HttpServletRequest request, @PathVariable long appId, Model model) {
-        if (!handleRedisApp(appId, model, ConstUtils.CACHE_REDIS_STANDALONE)) {
+    @RequestMapping(value = "/redis/standalone/{appToken}.json")
+    public void getStandaloneAppById(HttpServletRequest request, @PathVariable String appToken, Model model) {
+    	
+    	if ("".equals(appToken.trim())) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token不能为空 ");
+            return;
+    	}
+        AppDesc appDesc = appDao.getAppDescByToken(appToken);
+        if (appDesc == null) {
+            model.addAttribute("status", ClientStatusEnum.ERROR.getStatus());
+            model.addAttribute("message", "ERROR: token错误:" + appToken);
+            return;
+        }
+        if (!handleRedisApp(appDesc.getAppId(), model, ConstUtils.CACHE_REDIS_STANDALONE)) {
             return;
         }
 
@@ -153,7 +192,7 @@ public class RedisClientController {
             return;
         }
 
-        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appId);
+        List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appDesc.getAppId());
         String standalone = null;
         for (InstanceInfo instanceInfo : instanceList) {
             if (instanceInfo.isOffline()) {
@@ -166,7 +205,7 @@ public class RedisClientController {
         
         //保存版本信息
         try {
-            clientVersionService.saveOrUpdateClientVersion(appId, IpUtil.getIpAddr(request), clientVersion);
+            clientVersionService.saveOrUpdateClientVersion(appDesc.getAppId(), IpUtil.getIpAddr(request), clientVersion);
         } catch (Exception e) {
             logger.error("redisStandalone heart error:" + e.getMessage(), e);
         }

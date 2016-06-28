@@ -17,7 +17,10 @@ import com.sohu.cache.util.ConstUtils;
  */
 public class AppDesc implements Serializable {
     private static final long serialVersionUID = -3507970915810652761L;
-
+    /**
+     * 应用token
+     */
+    private String appToken;
     /**
      * 应用id
      */
@@ -112,6 +115,14 @@ public class AppDesc implements Serializable {
      * 客户端机器机房
      */
     private String clientMachineRoom;
+    
+    public String getAppToken() {
+    	return appToken;
+    }
+    
+    public void setAppToken(String appToken) {
+    	this.appToken = appToken;
+    }
 
     public long getAppId() {
         return appId;

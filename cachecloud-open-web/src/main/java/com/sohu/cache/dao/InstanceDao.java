@@ -14,6 +14,7 @@ import java.util.List;
  * Time: 下午3:58
  */
 public interface InstanceDao {
+    
     /**
      * 通过type查询实例列表
      *

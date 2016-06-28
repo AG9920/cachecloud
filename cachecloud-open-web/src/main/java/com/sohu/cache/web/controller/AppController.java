@@ -9,6 +9,7 @@ import com.sohu.cache.stats.app.AppDeployCenter;
 import com.sohu.cache.stats.app.AppStatsCenter;
 import com.sohu.cache.stats.instance.InstanceStatsCenter;
 import com.sohu.cache.util.DemoCodeUtil;
+import com.sohu.cache.util.TokenUtils;
 import com.sohu.cache.web.vo.AppDetailVO;
 import com.sohu.cache.web.chart.model.AreaChartEntity;
 import com.sohu.cache.web.chart.model.SimpleChartData;
@@ -643,9 +644,10 @@ public class AppController extends BaseController {
             appDesc.setPassedTime(now);
             appDesc.setVerId(1);
             appDesc.setStatus((short) AppStatusEnum.STATUS_ALLOCATED.getStatus());
+            appDesc.setAppToken(TokenUtils.newToken(appDesc));																																																																																
             appDeployCenter.createApp(appDesc, appUser, memSize);
         }
-        return new ModelAndView("redirect:/admin/app/list");
+        return new ModelAndView("redirect:/admin/app/list");																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
     }
 
     /**

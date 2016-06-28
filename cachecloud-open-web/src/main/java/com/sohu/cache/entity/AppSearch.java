@@ -10,6 +10,11 @@ import com.sohu.cache.web.util.Page;
  * @Time 上午10:44:01
  */
 public class AppSearch {
+	/**
+	 * 应用Token
+	 */
+	private  String appToken;
+	
     /**
      * 应用id
      */
@@ -39,6 +44,14 @@ public class AppSearch {
      * 分页
      */
     private Page page;
+    
+    public String getAppToken() {
+        return appToken;
+    }
+    
+    public void setAppToken(String apptoken) {
+    	this.appToken = appToken;
+    }
     
     public Long getAppId() {
         return appId;
