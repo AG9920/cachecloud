@@ -479,7 +479,7 @@ CREATE TABLE `app_desc` (
   `forecast_obj_num` int(11) DEFAULT NULL COMMENT '预估条目数',
   `mem_alert_value` int(11) DEFAULT NULL COMMENT '内存报警阀值',
   `client_machine_room` varchar(36) DEFAULT NULL COMMENT '客户端机房信息',
-  `app_token` varchar(32) DEFAULT NULL COMMENT 'TOKEN信息',
+  `app_token` varchar(32) NOT NULL COMMENT 'TOKEN信息',
   PRIMARY KEY (`app_id`),
   UNIQUE KEY `uidx_app_name` (`name`),
   UNIQUE KEY `idx_app_uid` (`app_id`),
