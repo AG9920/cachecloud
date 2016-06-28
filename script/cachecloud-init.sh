@@ -11,8 +11,10 @@
 
 set -o nounset
 set -o errexit
+#the root directory of the cachecloud
+CACHECLOUD_ROOT="/opt/cachecloud"
 
-readonly redisDir="/opt/cachecloud/redis"
+readonly redisDir="${CACHECLOUD_ROOT}/redis"
 readonly redisTarGz="redis-3.0.6.tar.gz"
 
 
@@ -59,14 +61,14 @@ createUser() {
 # create defautl dirs and authorize
 init() {
 	# create working dirs and a tmp dir
-	mkdir -p /opt/cachecloud/data
-	mkdir -p /opt/cachecloud/conf
-	mkdir -p /opt/cachecloud/logs
-	mkdir -p /opt/cachecloud/redis
+	mkdir -p ${CACHECLOUD_ROOT}/data
+	mkdir -p ${CACHECLOUD_ROOT}/conf
+	mkdir -p ${CACHECLOUD_ROOT}/logs
+	mkdir -p ${CACHECLOUD_ROOT}/redis
 	mkdir -p /tmp/cachecloud
 
 	# change owner
-	chown -R $1:$1 /opt/cachecloud
+	chown -R $1:$1 ${CACHECLOUD_ROOT}
 	chown -R $1:$1 /tmp/cachecloud
 	echo "OK: init: $1 done"
 }
