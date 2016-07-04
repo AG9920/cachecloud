@@ -19,18 +19,21 @@ public class MachineInfo {
     /**
      * ssh用户名
      */
-    private String sshUser= ConstUtils.USERNAME;
+    private String sshUser;
     
     /**
      * ssh密码
      */
-    private String sshPasswd=ConstUtils.PASSWORD;
+    private String sshPasswd;
     
     /**
      * ip地址
      */
     private String ip;
     
+    /**
+     * ssh端口
+     */
     private int sshPort;
     
     /**

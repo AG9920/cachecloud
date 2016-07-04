@@ -24,6 +24,39 @@
 											class="form-control" />
 									</div>
 								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										ssh 用户名:
+									</label>
+									<div class="col-md-5">
+										<input type="text" name="username" id="username${machine.info.id}"
+											value="${machine.info.sshUser}" placeholder="ssh 用户名"
+											class="form-control" />
+									</div>
+								</div>
+																
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										ssh 端口:
+									</label>
+									<div class="col-md-5">
+										<input type="text" name="port" id="port${machine.info.id}"
+											value="${machine.info.sshPort}" placeholder="ssh 端口"
+											class="form-control" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										ssh 密码:
+									</label>
+									<div class="col-md-5">
+										<input type="text" name="passwd" id="passwd${machine.info.id}"
+											value="${machine.info.sshPasswd}" placeholder="ssh 密码"
+											class="form-control" />
+									</div>
+								</div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3">

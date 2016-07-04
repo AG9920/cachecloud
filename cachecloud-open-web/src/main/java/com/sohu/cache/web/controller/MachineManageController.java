@@ -82,6 +82,9 @@ public class MachineManageController extends BaseController{
         machineInfo.setRealIp(request.getParameter("realIp"));
         machineInfo.setType(NumberUtils.toInt(request.getParameter("type"), 0));
         machineInfo.setExtraDesc(request.getParameter("extraDesc"));
+        machineInfo.setSshPasswd(request.getParameter("passwd"));
+        machineInfo.setSshUser(request.getParameter("userName"));
+        machineInfo.setSshPort(NumberUtils.toInt(request.getParameter("port"), 0));
         
         Date date = new Date();
         machineInfo.setServiceTime(date);

@@ -7,6 +7,9 @@ function saveOrUpdateMachine(machineId){
     var realIp = document.getElementById("realIp" + machineId);
     var type = document.getElementById("type" + machineId);
     var extraDesc = document.getElementById("extraDesc" + machineId);
+    var port = document.getElementById("port" + machineId);
+    var username = document.getElementById("username" + machineId);
+    var passwd = document.getElementById("passwd" + machineId);
 
 	if(ip.value == ""){
     	alert("IP不能为空!");
@@ -33,6 +36,15 @@ function saveOrUpdateMachine(machineId){
         virtual.focus();
         return false;
     }
+    if(username.value == ""){
+        alert("ssh用户名为空!");
+        username.focus();
+        return false;
+    }
+    if(port.value == ""){
+        alert("ssh用户名为空！使用默认值22");
+        port.value = 22;
+    }
     var addMachineBtn = document.getElementById("addMachineBtn" + machineId);
     addMachineBtn.disabled = true;
     
@@ -40,6 +52,9 @@ function saveOrUpdateMachine(machineId){
 		'/manage/machine/add.json',
 		{
             ip: ip.value,
+            port: port.value,
+            userName: username.value,
+            passwd: passwd.value,
             room: room.value,
             mem: mem.value,
             cpu: cpu.value,

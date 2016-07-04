@@ -102,7 +102,6 @@ public class SSHUtil {
         port = IntegerUtil.defaultIfSmallerThan0(port, ConstUtils.SSH_PORT_DEFAULT);
         Connection conn = null;
         try {
-        	System.out.println("SSH with [ userName: " + userName + ", " + "password: " + password + "] on ip: " + ip+", port:"+port);
             conn = new Connection(ip, port);
             conn.connect(null, 2000, 2000);
             boolean isAuthenticated = conn.authenticateWithPassword(userName, password);
