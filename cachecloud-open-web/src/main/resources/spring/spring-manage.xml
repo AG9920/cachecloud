@@ -5,7 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
        default-autowire="byName">
-
+    <!-- SSH命令的执行 -->
+    <bean id="sshUtil" class="com.sohu.cache.ssh.SSHUtil" init-method="init">
+        <property name="machineDao" ref="machineDao" />
+    </bean>	
+    
     <bean id="appService" class="com.sohu.cache.web.service.impl.AppServiceImpl"/>
 
     <bean id="memFaultService" class="com.sohu.cache.web.service.impl.MemFaultServiceImpl"/>

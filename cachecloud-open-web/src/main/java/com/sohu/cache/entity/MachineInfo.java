@@ -31,6 +31,8 @@ public class MachineInfo {
      */
     private String ip;
     
+    private int sshPort;
+    
     /**
      * 机房
      */
@@ -119,7 +121,15 @@ public class MachineInfo {
     public void setSshPasswd(String sshPasswd) {
         this.sshPasswd = sshPasswd;
     }
-
+    
+    public void setSshPort(int sshPort) {
+        this.sshPort = sshPort;
+    }
+    
+    public int getSshPort() {
+        return sshPort;
+    }
+    
     public String getIp() {
         return ip;
     }
@@ -238,6 +248,7 @@ public class MachineInfo {
                 "id=" + id +
                 ", sshUser='" + sshUser + '\'' +
                 ", sshPasswd='" + sshPasswd + '\'' +
+                ", sshPort='" + sshPort + '\'' +
                 ", ip='" + ip + '\'' +
                 ", room='" + room + '\'' +
                 ", mem=" + mem +

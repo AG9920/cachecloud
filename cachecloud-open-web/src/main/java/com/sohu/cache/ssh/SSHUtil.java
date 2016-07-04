@@ -1,5 +1,6 @@
 package com.sohu.cache.ssh;
 
+
 import static com.sohu.cache.constant.BaseConstant.WORD_SEPARATOR;
 import static com.sohu.cache.constant.EmptyObjectConstant.EMPTY_STRING;
 import static com.sohu.cache.constant.SymbolConstant.COMMA;
@@ -10,6 +11,8 @@ import com.sohu.cache.exception.SSHException;
 import com.sohu.cache.util.ConstUtils;
 import com.sohu.cache.util.IntegerUtil;
 import com.sohu.cache.util.StringUtil;
+import com.sohu.cache.dao.MachineDao;
+import com.sohu.cache.entity.MachineInfo;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
@@ -45,7 +48,37 @@ public class SSHUtil {
     private final static String MEM_FREE = "MemFree";
     private final static String MEM_BUFFERS = "Buffers";
     private final static String MEM_CACHED = "Cached";
+    
+    private static SSHUtil sshUtil;
 
+    //private  SshService sshService;
+    private MachineDao machineDao;
+
+    public void setMachineDao(MachineDao machineDao) {
+        this.machineDao = machineDao;
+    }
+    public  MachineDao getMachineDao() {
+    	return machineDao;
+    }
+
+    /*public  SshService getSshService() {
+    	return sshService;
+    }
+    
+    public void setSshService(SshService sshService) {
+    	this.sshService = sshService;
+    }*/
+    public void init() {
+    	sshUtil = this;
+    	//sshUtil.sshService = this.sshService;
+    	sshUtil.machineDao = this.machineDao;
+    }
+
+    public static MachineStats getMachineInfo(String ip) throws SSHException {
+    	MachineInfo machineInfo = sshUtil.machineDao.getMachineInfoByIp(ip);
+        return getMachineInfo(machineInfo.getIp(), machineInfo.getSshPort(), machineInfo.getSshUser(), machineInfo.getSshPasswd());
+    }
+    
     /**
      * Get HostPerformanceEntity[cpuUsage, memUsage, load] by ssh.<br>
      * 方法返回前已经释放了所有资源，调用方不需要关心
@@ -65,9 +98,11 @@ public class SSHUtil {
                 throw new SSHException(e.getMessage(), e);
             }
         }
+        
         port = IntegerUtil.defaultIfSmallerThan0(port, ConstUtils.SSH_PORT_DEFAULT);
         Connection conn = null;
         try {
+        	System.out.println("SSH with [ userName: " + userName + ", " + "password: " + password + "] on ip: " + ip+", port:"+port);
             conn = new Connection(ip, port);
             conn.connect(null, 2000, 2000);
             boolean isAuthenticated = conn.authenticateWithPassword(userName, password);
@@ -369,8 +404,8 @@ public class SSHUtil {
      * @throws SSHException
      */
     public static boolean scpFileToRemote(String ip, String localPath, String remoteDir) throws SSHException {
-        int sshPort = SSHUtil.getSshPort(ip);
-        return scpFileToRemote(ip, sshPort, ConstUtils.USERNAME, ConstUtils.PASSWORD, localPath, remoteDir);
+        MachineInfo machineInfo = sshUtil.machineDao.getMachineInfoByIp(ip);
+        return scpFileToRemote(machineInfo.getIp(), machineInfo.getSshPort(), machineInfo.getSshUser(), machineInfo.getSshPasswd(), localPath, remoteDir);
     }
 
     /**
@@ -382,8 +417,8 @@ public class SSHUtil {
      * @throws SSHException
      */
     public static String execute(String ip, String cmd) throws SSHException {
-        int sshPort = SSHUtil.getSshPort(ip);
-        return execute(ip, sshPort, ConstUtils.USERNAME, ConstUtils.PASSWORD, cmd);
+        MachineInfo machineInfo = sshUtil.machineDao.getMachineInfoByIp(ip);
+        return execute(machineInfo.getIp(), machineInfo.getSshPort(), machineInfo.getSshUser(), machineInfo.getSshPasswd(), cmd);
     }
 
     /**
@@ -426,7 +461,7 @@ public class SSHUtil {
         /**
          * 如果ssh默认端口不是22,请自行实现该逻辑
          */
-        return ConstUtils.SSH_PORT_DEFAULT;
+    	return sshUtil.machineDao.getMachineInfoByIp(ip).getSshPort();
     }
 
     /**

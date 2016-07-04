@@ -737,6 +737,7 @@ CREATE TABLE `machine_info` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '机器的id',
   `ssh_user` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'cachecloud' COMMENT 'ssh用户',
   `ssh_passwd` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'cachecloud' COMMENT 'ssh密码',
+  `ssh_port` int(11) NOT NULL DEFAULT '22' COMMENT '机器的ssh端口默认是22',
   `ip` varchar(16) COLLATE utf8_bin NOT NULL COMMENT 'ip',
   `room` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '所属机房',
   `mem` int(11) unsigned NOT NULL COMMENT '内存大小，单位G',

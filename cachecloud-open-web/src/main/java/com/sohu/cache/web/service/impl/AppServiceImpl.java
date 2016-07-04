@@ -27,12 +27,12 @@ import redis.clients.jedis.HostAndPort;
 public class AppServiceImpl implements AppService {
 
     private Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
-
+    
     /**
      * 应用相关dao
      */
     private AppDao appDao;
-
+    
     /**
      * 应用日志相关dao
      */
@@ -456,7 +456,7 @@ public class AppServiceImpl implements AppService {
     public void setAppDao(AppDao appDao) {
         this.appDao = appDao;
     }
-
+    
     public void setAppAuditLogDao(AppAuditLogDao appAuditLogDao) {
         this.appAuditLogDao = appAuditLogDao;
     }
