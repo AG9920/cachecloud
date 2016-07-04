@@ -27,12 +27,17 @@ import redis.clients.jedis.HostAndPort;
 public class AppServiceImpl implements AppService {
 
     private Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
-
+    
+    /**
+     * ssh信息相关dao
+     */
+    public static HostSshInfoDao hostSshInfoDao;
+    
     /**
      * 应用相关dao
      */
     private AppDao appDao;
-
+    
     /**
      * 应用日志相关dao
      */
@@ -68,6 +73,7 @@ public class AppServiceImpl implements AppService {
     
     @Override
     public int getAppDescCount(AppUser appUser, AppSearch appSearch) {
+    	System.out.println("-----------------------------------------------"+hostSshInfoDao+"---------------------------");
         int count = 0;
         // 管理员获取全部应用
         if (AppUserTypeEnum.ADMIN_USER.value().equals(appUser.getType())) {
@@ -456,7 +462,7 @@ public class AppServiceImpl implements AppService {
     public void setAppDao(AppDao appDao) {
         this.appDao = appDao;
     }
-
+    
     public void setAppAuditLogDao(AppAuditLogDao appAuditLogDao) {
         this.appAuditLogDao = appAuditLogDao;
     }

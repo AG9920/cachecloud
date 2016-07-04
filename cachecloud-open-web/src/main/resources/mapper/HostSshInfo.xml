@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sohu.cache.dao.HostSshInfoDao">
+    <sql id="columns">
+    	host_ip,ssh_port,user_name,user_passwd,host_info
+    </sql>
+
+    <select id="selectHostSshInfo" resultType="com.sohu.cache.entity.HostSshInfo">
+        select id,<include refid="columns"/>
+        from host_info
+        <where>
+            <choose>
+                <when test="hostIp != null">host_ip=#{hostIp}</when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="getHostSshInfo" resultType="com.sohu.cache.entity.HostSshInfo">
+        select id,<include refid="columns"/>
+        from host_info
+        where host_ip=#{hostIp}
+    </select>
+
+    <insert id="insertHostSshInfo" parameterType="com.sohu.cache.entity.HostSshInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into host_info(<include refid="columns"/>)
+        values(#{hostIp},#{sshPort},#{userName},#{userPasswd},#{hostInfo})
+    </insert>
+
+    <update id="updateHostSshInfo" parameterType="com.sohu.cache.entity.HostSshInfo">
+        update host_info
+        set
+          userName = #{userName},
+          userPasswd = #{userPasswd},
+          sshPort = #{sshPort},
+        where host_ip=#{hostIp}
+    </update>
+    
+    <select id="getSshPort" resultType="com.sohu.cache.entity.HostSshInfo">
+        select host_port
+        from host_info
+        where host_ip=#{hostIp}
+    </select>
+
+</mapper>

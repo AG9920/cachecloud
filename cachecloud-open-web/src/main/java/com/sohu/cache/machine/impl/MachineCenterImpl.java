@@ -134,8 +134,7 @@ public class MachineCenterImpl implements MachineCenter {
         Map<String, Object> infoMap = new HashMap<String, Object>();
         MachineStats machineStats = null;
         try {
-            int sshPort = SSHUtil.getSshPort(ip);
-            machineStats = SSHUtil.getMachineInfo(ip, sshPort, ConstUtils.USERNAME, ConstUtils.PASSWORD);
+            machineStats = SSHUtil.getMachineInfo(ip);
             machineStats.setHostId(hostId);
             if (machineStats != null) {
                 infoMap.put(MachineConstant.Ip.getValue(), machineStats.getIp());

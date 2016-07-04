@@ -5,6 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
        default-autowire="byName">
+    <!-- SSH用户名密码获取的相关操作 -->  
+    <bean id="sshService" class="com.sohu.cache.web.service.impl.SshServiceImpl"/>	
 
     <bean id="appService" class="com.sohu.cache.web.service.impl.AppServiceImpl"/>
 

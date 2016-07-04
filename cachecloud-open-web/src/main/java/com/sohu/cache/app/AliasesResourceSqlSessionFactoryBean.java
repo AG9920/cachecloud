@@ -40,6 +40,7 @@ public class AliasesResourceSqlSessionFactoryBean extends SqlSessionFactoryBean 
                 className = packages + className;
                 Class<?> clazz = ClassUtils.resolveClassName(className, Thread.currentThread().getContextClassLoader());
                 classList.add(clazz);
+                System.out.println("%%%%%%%%%%%%%%%%%"+classList.toString()+"%%%%%%%%%%%%%%%%%%%%%%");
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(),e);
             }

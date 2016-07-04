@@ -248,6 +248,25 @@ CREATE TABLE `QRTZ_TRIGGERS` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `host_info`
+--
+
+DROP TABLE IF EXISTS `host_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `host_info` (
+	  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	  `host_ip` varchar(16) NOT NULL COMMENT '机器的ip',
+	  `ssh_port` int(11) NOT NULL COMMENT 'SSH的端口号',
+	  `user_name` varchar(64) NOT NULL COMMENT 'SSH的用户名',
+	  `user_passwd` varchar(64) NOT NULL COMMENT 'SSH的密码',
+	  `host_info` varchar(360) COMMENT '主机描述',
+	  PRIMARY KEY (`id`),
+	  UNIQUE KEY `host_ip` (`host_ip`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='主机SSH信息表'  
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `app_audit`
 --
 

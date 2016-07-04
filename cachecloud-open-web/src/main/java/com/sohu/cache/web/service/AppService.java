@@ -3,6 +3,7 @@ package com.sohu.cache.web.service;
 import java.util.List;
 
 import com.sohu.cache.constant.AppAuditType;
+import com.sohu.cache.dao.AppDao;
 import com.sohu.cache.entity.*;
 import com.sohu.cache.web.enums.SuccessEnum;
 
@@ -200,6 +201,5 @@ public interface AppService {
      * 获取所有应用
      */
     List<AppDesc> getAllAppDesc();
-
     
 }
