@@ -31,9 +31,9 @@ public class RedisClusterBuilder {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * 应用id
+     * 应用token
      */
-    private final long appId;
+    private final String appToken;
     
     /**
      * jedis对象池配置
@@ -70,8 +70,8 @@ public class RedisClusterBuilder {
      *
      * @param appId
      */
-    RedisClusterBuilder(final long appId) {
-        this.appId = appId;
+    RedisClusterBuilder(final String appToken) {
+        this.appToken = appToken;
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
         poolConfig.setMaxTotal(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL * 5);
         poolConfig.setMaxIdle(GenericObjectPoolConfig.DEFAULT_MAX_IDLE * 2);
@@ -91,14 +91,14 @@ public class RedisClusterBuilder {
                     if (jedisCluster != null) {
                         return jedisCluster;
                     }
-                    String url = String.format(ConstUtils.REDIS_CLUSTER_URL, String.valueOf(appId));
+                    String url = String.format(ConstUtils.REDIS_CLUSTER_URL, appToken);
                     String response = HttpUtils.doGet(url);
                     ObjectMapper objectMapper = new ObjectMapper();
                     HeartbeatInfo heartbeatInfo = null;
                     try {
                         heartbeatInfo = objectMapper.readValue(response, HeartbeatInfo.class);
                     } catch (IOException e) {
-                        logger.error("remote build error, appId: {}", appId, e);
+                        logger.error("remote build error, appToken: {}", appToken, e);
                     }
                     if (heartbeatInfo == null) {
                         continue;
@@ -116,6 +116,7 @@ public class RedisClusterBuilder {
                     Set<HostAndPort> nodeList = new HashSet<HostAndPort>();
                     //形如 ip1:port1,ip2:port2,ip3:port3
                     String nodeInfo = heartbeatInfo.getShardInfo();
+                    System.out.println(nodeInfo);
                     //为了兼容,如果允许直接nodeInfo.split(" ")
                     nodeInfo = nodeInfo.replace(" ", ",");
                     String[] nodeArray = nodeInfo.split(",");

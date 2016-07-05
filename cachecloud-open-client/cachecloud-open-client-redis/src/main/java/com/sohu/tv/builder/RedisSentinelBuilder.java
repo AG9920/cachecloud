@@ -29,9 +29,9 @@ public class RedisSentinelBuilder {
     private static Logger logger = LoggerFactory.getLogger(RedisSentinelBuilder.class);
 
     /**
-     * 应用id
+     * 应用token
      */
-    private final long appId;
+    private final String appToken;
     
     /**
      * jedis对象池配置
@@ -63,8 +63,8 @@ public class RedisSentinelBuilder {
      *
      * @param appId
      */
-    RedisSentinelBuilder(final long appId) {
-        this.appId = appId;
+    RedisSentinelBuilder(final String appToken) {
+        this.appToken = appToken;
         poolConfig = new GenericObjectPoolConfig();
         poolConfig.setMaxTotal(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL * 3);
         poolConfig.setMaxIdle(GenericObjectPoolConfig.DEFAULT_MAX_IDLE * 2);
@@ -83,9 +83,9 @@ public class RedisSentinelBuilder {
                         /**
                          * http请求返回的结果是空的；
                          */
-                        String response = HttpUtils.doGet(String.format(ConstUtils.REDIS_SENTINEL_URL, appId));
+                        String response = HttpUtils.doGet(String.format(ConstUtils.REDIS_SENTINEL_URL, appToken));
                         if (response == null || response.isEmpty()) {
-                            logger.warn("get response from remote server error, appId: {}, continue...", appId);
+                            logger.warn("get response from remote server error, appToken: {}, continue...", appToken);
                             continue;
                         }
 
@@ -97,10 +97,10 @@ public class RedisSentinelBuilder {
                         try {
                             heartbeatInfo = mapper.readTree(response);
                         } catch (Exception e) {
-                            logger.error("heartbeat error, appId: {}. continue...", appId, e);
+                            logger.error("heartbeat error, appToken: {}. continue...", appToken, e);
                         }
                         if (heartbeatInfo == null) {
-                            logger.error("get sentinel info for appId: {} error. continue...", appId);
+                            logger.error("get sentinel info for appToken: {} error. continue...", appToken);
                             continue;
                         }
 
@@ -133,7 +133,7 @@ public class RedisSentinelBuilder {
                         return sentinelPool;
                     }
                 } catch (Throwable e) {//容错
-                    logger.error("error in build, appId: {}", appId, e);
+                    logger.error("error in build, appToken: {}", appToken, e);
                 } finally {
                     LOCK.unlock();
                 }

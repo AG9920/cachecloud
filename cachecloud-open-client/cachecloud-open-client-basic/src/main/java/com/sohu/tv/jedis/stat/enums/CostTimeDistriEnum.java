@@ -89,10 +89,4 @@ public enum CostTimeDistriEnum {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        // 获取活在字节区间
-        // CostTimeDistriEnum a = getRightCostDistri(6);
-    }
-
 }

@@ -29,7 +29,7 @@ public class RedisStandaloneBuilder {
     private static final Lock LOCK = new ReentrantLock();
     private volatile JedisPool jedisPool;
     private GenericObjectPoolConfig poolConfig;
-    private final long appId;
+    private final String appToken;
     private int timeout = Protocol.DEFAULT_TIMEOUT;
 
     /**
@@ -37,8 +37,8 @@ public class RedisStandaloneBuilder {
      *
      * @param appId
      */
-    RedisStandaloneBuilder(final long appId) {
-        this.appId = appId;
+    RedisStandaloneBuilder(final String appToken) {
+        this.appToken = appToken;
         poolConfig = new GenericObjectPoolConfig();
         poolConfig.setMaxTotal(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL * 3);
         poolConfig.setMaxIdle(GenericObjectPoolConfig.DEFAULT_MAX_IDLE * 2);
@@ -56,9 +56,9 @@ public class RedisStandaloneBuilder {
                         /**
                          * 心跳返回的请求为空；
                          */
-                        String response = HttpUtils.doGet(String.format(ConstUtils.REDIS_STANDALONE_URL, appId));
+                        String response = HttpUtils.doGet(String.format(ConstUtils.REDIS_STANDALONE_URL, appToken));
                         if (response == null || response.isEmpty()) {
-                            logger.warn("cannot get response from server, appId={}. continue...", appId);
+                            logger.warn("cannot get response from server, appToken={}. continue...", appToken);
                             continue;
                         }
 
@@ -70,11 +70,11 @@ public class RedisStandaloneBuilder {
                         try {
                             responseJson = mapper.readTree(response);
                         } catch (Exception e) {
-                            logger.error("read json from response error, appId: {}.", appId, e);
+                            logger.error("read json from response error, appToken: {}.", appToken, e);
                         }
 
                         if (responseJson == null) {
-                            logger.warn("invalid response, appId: {}. continue...", appId);
+                            logger.warn("invalid response, appToken: {}. continue...", appToken);
                             continue;
                         }
 
@@ -84,7 +84,7 @@ public class RedisStandaloneBuilder {
                         String instance = responseJson.get("standalone").asText();
                         String[] instanceArr = instance.split(":");
                         if (instanceArr.length != 2) {
-                            logger.warn("instance info is invalid, instance: {}, appId: {}, continue...", instance, appId);
+                            logger.warn("instance info is invalid, instance: {}, appToken: {}, continue...", instance, appToken);
                             continue;
                         }
                         

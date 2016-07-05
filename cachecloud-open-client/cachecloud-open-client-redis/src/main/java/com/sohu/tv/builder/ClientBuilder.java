@@ -11,29 +11,29 @@ public class ClientBuilder {
     /**
      * 构造redis cluster的builder
      *
-     * @param appId
+     * @param appToken
      * @return
      */
-    public static RedisClusterBuilder redisCluster(final long appId) {
-        return new RedisClusterBuilder(appId);
+    public static RedisClusterBuilder redisCluster(final String appToken) {
+        return new RedisClusterBuilder(appToken);
     }
 
     /**
      * 构造redis sentinel的builder
      *
-     * @param appId
+     * @param appToken
      * @return
      */
-    public static RedisSentinelBuilder redisSentinel(final long appId) {
-        return new RedisSentinelBuilder(appId);
+    public static RedisSentinelBuilder redisSentinel(final String appToken) {
+        return new RedisSentinelBuilder(appToken);
     }
 
     /**
      * 构造redis standalone的builder
-     * @param appId
+     * @param appToken
      * @return
      */
-    public static RedisStandaloneBuilder redisStandalone(final long appId) {
-        return new RedisStandaloneBuilder(appId);
+    public static RedisStandaloneBuilder redisStandalone(final String appToken) {
+        return new RedisStandaloneBuilder(appToken;
     }
 }
