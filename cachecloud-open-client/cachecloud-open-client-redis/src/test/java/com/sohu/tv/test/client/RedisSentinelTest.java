@@ -19,11 +19,11 @@ import redis.clients.jedis.JedisSentinelPool;
  */
 public class RedisSentinelTest extends BaseTest {
 
-    private final static long appId = 0L;
+    private final static String appToken = "";
 
     @Test
     public void testSentinel() {
-        JedisSentinelPool sentinelPool = ClientBuilder.redisSentinel(appId)
+        JedisSentinelPool sentinelPool = ClientBuilder.redisSentinel(appToken)
                 .setConnectionTimeout(2000)
                 .setSoTimeout(1000)
                 .build();
@@ -54,7 +54,7 @@ public class RedisSentinelTest extends BaseTest {
         poolConfig.setJmxEnabled(true);
         poolConfig.setMaxWaitMillis(3000);
 
-        sentinelPool = ClientBuilder.redisSentinel(appId)
+        sentinelPool = ClientBuilder.redisSentinel(appToken)
                 .setPoolConfig(poolConfig)
                 .setConnectionTimeout(2000)
                 .setSoTimeout(1000)

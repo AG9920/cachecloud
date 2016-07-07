@@ -34,6 +34,6 @@ public class ClientBuilder {
      * @return
      */
     public static RedisStandaloneBuilder redisStandalone(final String appToken) {
-        return new RedisStandaloneBuilder(appToken;
+        return new RedisStandaloneBuilder(appToken);
     }
 }

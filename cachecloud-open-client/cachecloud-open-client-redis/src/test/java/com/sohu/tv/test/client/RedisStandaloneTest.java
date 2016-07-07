@@ -14,8 +14,8 @@ public class RedisStandaloneTest extends BaseTest {
 
     @Test
     public void testStandalone() {
-        long appId = 10121;
-        JedisPool jedisPool = ClientBuilder.redisStandalone(appId)
+        String appToken = "a6ad4fe2b78fb50e8efd582424fd6b6c";
+        JedisPool jedisPool = ClientBuilder.redisStandalone(appToken)
                 .setPoolConfig(new GenericObjectPoolConfig())
                 .setTimeout(2000)
                 .build();
@@ -33,7 +33,7 @@ public class RedisStandaloneTest extends BaseTest {
 
     @Test
     public void testStandaloneExample() {
-        long appId = 10122;
+        String appToken = "a6ad4fe2b78fb50e8efd582424fd6b6c";
         JedisPool jedisPool = null;
 
         // 使用默认配置
@@ -48,7 +48,7 @@ public class RedisStandaloneTest extends BaseTest {
         poolConfig.setJmxEnabled(true);
         poolConfig.setMaxWaitMillis(3000);
 
-        jedisPool = ClientBuilder.redisStandalone(appId)
+        jedisPool = ClientBuilder.redisStandalone(appToken)
                 .setPoolConfig(poolConfig)
                 .setTimeout(2000)
                 .build();

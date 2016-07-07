@@ -19,11 +19,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisClusterTest extends BaseTest {
 
-    private final static long appId = 0L;
+    private final static String appToken = "";
 
     @Test
     public void pushData() throws Exception {
-        JedisCluster redisCluster = ClientBuilder.redisCluster(appId)
+        JedisCluster redisCluster = ClientBuilder.redisCluster(appToken)
                 .setJedisPoolConfig(getPoolConfig())
                 .setConnectionTimeout(2000)
                 .setSoTimeout(1000)
@@ -37,7 +37,7 @@ public class RedisClusterTest extends BaseTest {
 
     @Test
     public void testCluster() {
-        JedisCluster redisCluster = ClientBuilder.redisCluster(appId)
+        JedisCluster redisCluster = ClientBuilder.redisCluster(appToken)
                 .setJedisPoolConfig(getPoolConfig())
                 .setConnectionTimeout(2000)
                 .setSoTimeout(1000)
