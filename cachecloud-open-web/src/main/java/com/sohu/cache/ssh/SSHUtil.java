@@ -394,7 +394,7 @@ public class SSHUtil {
     }
 
     /**
-     * 重载，使用默认端口、用户名和密码
+     * 重载，使用配置的端口、用户名和密码
      *
      * @param ip
      * @param localPath
@@ -408,7 +408,7 @@ public class SSHUtil {
     }
 
     /**
-     * 重载，使用默认端口、用户名和密码
+     * 重载，使用配置端口、用户名和密码
      *
      * @param ip
      * @param cmd
