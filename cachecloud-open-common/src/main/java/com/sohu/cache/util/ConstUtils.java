@@ -210,7 +210,7 @@ public class ConstUtils {
     /**
      * cachecloud根目录，这个要与cachecloud-init.sh脚本中的目录一致
      */
-    public static String DEFAULT_CACHECLOUD_BASE_DIR = "/opt";
+    public static String DEFAULT_CACHECLOUD_BASE_DIR = "/opt/youku";
     public static String CACHECLOUD_BASE_DIR = DEFAULT_CACHECLOUD_BASE_DIR;
     
     
