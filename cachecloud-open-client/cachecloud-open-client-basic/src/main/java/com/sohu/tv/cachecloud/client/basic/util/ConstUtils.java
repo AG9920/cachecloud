@@ -21,6 +21,12 @@ public class ConstUtils {
      * 客户端版本信息
      */
     public static final String CLIENT_VERSION;
+    
+    /**
+     * 客户端TOKEN信息
+     */
+    public static final String CLIENT_TOKEN;
+
 
     /**
      * 上报域名和对应各个类型redis的rest url.
@@ -38,6 +44,7 @@ public class ConstUtils {
         HTTP_SOCKET_TIMEOUT = Integer.valueOf(rb.getString("http_socket_timeout"));
 
         CLIENT_VERSION = rb.getString("client_version");
+        CLIENT_TOKEN = rb.getString("client_token");
 
         DOMAIN_URL = rb.getString("domain_url");
         REDIS_CLUSTER_URL = DOMAIN_URL + rb.getString("redis_cluster_suffix") + CLIENT_VERSION;
