@@ -47,7 +47,8 @@ public enum RedisConfigEnum {
     AOF_REWRITE_INCREMENTAL_FSYNC("aof-rewrite-incremental-fsync","yes","aof rewrite过程中,是否采取增量文件同步策略,默认:yes"),
     NO_APPENDFSYNC_ON_REWRITE("no-appendfsync-on-rewrite", "yes", "是否在后台aof文件rewrite期间调用fsync,默认调用,修改为yes,防止可能fsync阻塞,但可能丢失rewrite期间的数据"),
     AUTO_AOF_REWRITE_MIN_SIZE("auto-aof-rewrite-min-size", "64m", "触发rewrite的aof文件最小阀值,默认64m"),
-    AUTO_AOF_REWRITE_PERCENTAGE("auto-aof-rewrite-percentage", "100", "Redis重写aof文件的比例条件,默认从100开始,统一机器下不同实例按4%递减");
+    AUTO_AOF_REWRITE_PERCENTAGE("auto-aof-rewrite-percentage", "100", "Redis重写aof文件的比例条件,默认从100开始,统一机器下不同实例按4%递减"),
+	PROTECTED_MODE("protected-mode", "no", "关闭保护模式");
 
     private String key;
 
